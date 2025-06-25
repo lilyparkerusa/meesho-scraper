@@ -22,9 +22,7 @@ app.get('/scrape', async (req, res) => {
     const data = await page.evaluate(() => {
       const title = document.querySelector('h1')?.innerText || '';
       const description = document.querySelector('[data-testid="product-description"]')?.innerText || '';
-      const imageNodes = Array.from(document.querySelectorAll('img[src*="images.meesho"]'));
-      const images = imageNodes.map(img => img.src).filter((v, i, a) => a.indexOf(v) === i);
-
+      const images = Array.from(document.querySelectorAll('img[src*="images.meesho"]')).map(img => img.src);
       const priceText = document.querySelector('[data-testid="price-main"]')?.innerText || '';
       const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
 
@@ -33,13 +31,12 @@ app.get('/scrape', async (req, res) => {
 
     await browser.close();
     res.json(data);
-  } catch (err) {
-    console.error('Scraping failed:', err);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Scraping failed' });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
-
