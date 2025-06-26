@@ -4,8 +4,10 @@
   "description": "Meesho product scraper for WooCommerce",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
-  },
+    "scripts": {
+  "start": "node index.js",
+  "postinstall": "puppeteer install --unsafe-perm=true"
+},
   "dependencies": {
     "express": "^4.18.2",
     "puppeteer": "^21.3.8",
